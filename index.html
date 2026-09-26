@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TraceDance builds targeted agent behavior benchmarks from real-world deployment traces. Explore the method, results across nine LLMs, and a decision-point continuation case.">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta property="og:title" content="TraceDance | Agent Behavior Benchmarks from Deployment Traces">
+  <meta property="og:description" content="From deployment problems to targeted tests of an agent’s next move.">
+  <meta property="og:type" content="website">
+  <title>TraceDance | Agent Behavior Benchmarks from Deployment Traces</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="wordmark" href="#"><span class="brand-symbol" aria-hidden="true">↳</span> TraceDance</a>
+  <nav aria-label="Main navigation">
+    <a href="#method">Method</a><a href="#results">Results</a><a href="#case">Case study</a><a href="#resources">Resources</a>
+  </nav>
+  <span class="nav-paper">Paper forthcoming</span>
+</header>
+<main id="main">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="status-dot"></span> Agent behavior · Deployment traces · Evaluation</p>
+      <h1 id="hero-title">Trace<span>Dance</span></h1>
+      <p class="paper-title">An Automated System for Building Agent Behavior Benchmarks from Real-World Agent Deployment Traces</p>
+      <p class="hero-summary">Turn a behavior you want to test into a benchmark drawn from real agent traces. Then ask: <em>what should the agent do next?</em></p>
+      <div class="actions">
+        <span class="button" aria-disabled="true">Paper forthcoming</span>
+        <a class="button" href="#method">Explore the method <span aria-hidden="true">↓</span></a>
+        <a class="button" data-code-link hidden>Code <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <div class="trace-art" role="img" aria-label="Illustration: retrieve a deployment trace, confirm a target behavior, cut at its decision point, and evaluate a new next turn.">
+      <div class="art-top"><span>FROM TRACE TO TEST</span><span class="art-index">01 / 03</span></div>
+      <div class="trace-event"><span class="event-dot"></span><div><small>USER</small><strong>A task in the real world</strong></div><span class="event-time">01</span></div>
+      <div class="trace-event"><span class="event-dot"></span><div><small>ASSISTANT → TOOL</small><strong>An action, a result, a choice</strong></div><span class="event-time">02</span></div>
+      <div class="cut"><span>DECISION POINT</span><span aria-hidden="true">✂</span></div>
+      <div class="next-turn"><span class="next-marker" aria-hidden="true">↳</span><div><small>EVALUATED MODEL</small><strong>What happens next?</strong><p>One new turn. A behavior-specific rubric.</p></div></div>
+      <div class="art-bottom"><span>Retrieve</span><i aria-hidden="true">→</i><span>Confirm</span><i aria-hidden="true">→</i><span class="selected">Evaluate</span></div>
+    </div>
+  </section>
+
+  <section class="authors wrap" aria-label="Authors and affiliations">
+    <p class="author-list">
+      <a href="https://openreview.net/profile?id=~Dehai_Min1">Dehai Min<sup>1,2,*</sup></a>
+      <a href="https://openreview.net/profile?id=~Daoan_Zhang2">Daoan Zhang<sup>1,*</sup></a>
+      <a href="https://openreview.net/profile?id=~Yiming_Zeng3">Yiming Zeng<sup>1,*</sup></a>
+      <a href="https://openreview.net/profile?id=~Huayi_Zhang1">Huayi Zhang<sup>1</sup></a>
+      <a href="https://openreview.net/profile?id=~Ziyi_Chen8">Ziyi Chen<sup>1</sup></a>
+      <a href="https://openreview.net/profile?id=~Yan_Zhang12">Yan Zhang<sup>1</sup></a>
+      <a href="https://openreview.net/profile?id=~Qinbo_Bai1">Qinbo Bai<sup>1</sup></a>
+      <a href="https://openreview.net/profile?id=~Mengyuan_Chao1">Mengyuan Chao<sup>1</sup></a>
+      <a href="https://openreview.net/profile?id=~JING_NING2">Jing Ning<sup>1</sup></a>
+      <a href="https://openreview.net/profile?id=~Qiyue_Hua1">Qiyue Hua<sup>1</sup></a>
+      <a href="https://openreview.net/profile?id=~Huiyi_Chen1">Huiyi Chen<sup>2</sup></a>
+      <a href="https://openreview.net/profile?id=~Hanrong_Zhang1">Hanrong Zhang<sup>2</sup></a>
+      <a href="https://openreview.net/profile?id=~Henry_Peng_Zou1">Henry Peng Zou<sup>2</sup></a>
+      <a href="https://openreview.net/profile?id=~Jie_Yang33">Jie Yang<sup>2</sup></a>
+      <a href="https://openreview.net/profile?id=~Wei_Xu24">Wei Xu<sup>1,+</sup></a>
+      <a href="https://openreview.net/profile?id=~Philip_S._Yu1">Philip S. Yu<sup>2,^</sup></a>
+    </p>
+    <p class="affiliations"><span><sup>1</sup> ByteDance Inc., USA</span><span><sup>2</sup> University of Illinois at Chicago</span></p>
+    <p class="contributions">* Equal Contribution <span>+ Project Head</span> <span>^ Corresponding Author</span></p>
+    <div class="institution-logos"><img src="assets/bytedance.jpg" width="195" height="45" alt="ByteDance"><img src="assets/uic.jpg" width="51" height="51" alt="UIC"></div>
+  </section>
+
+  <section class="overview wrap" aria-label="Research overview">
+    <p class="eyebrow">THE QUESTION</p>
+    <h2>Finishing the task is only<br>part of the story.</h2>
+    <p class="lead">An agent can complete a task while skipping checks, mishandling a failure, or making an unsupported claim. Developers need tests for the specific behaviors they encounter in deployment.</p>
+    <div class="stats">
+      <div><strong>252,557</strong><span>deployment sessions</span><small>Claude Code + OpenClaw</small></div>
+      <div><strong>107</strong><span>constructed benchmarks</span><small>4,125 benchmark instances</small></div>
+      <div><strong>95.3<span>%</span></strong><span>build-target success</span><small>102 of 107 requests</small></div>
+      <div><strong>26.7<span>%</span></strong><span>mean model pass rate</span><small>Nine evaluated LLMs</small></div>
+    </div>
+    <details class="abstract"><summary>Read the abstract <span aria-hidden="true">+</span></summary><div data-abstract><p>An agent can complete a task while exhibiting undesirable behavior during execution. Developers need tests for the specific behaviors encountered in deployment, beyond fixed benchmark suites. We present TraceDance, an agent system that constructs targeted benchmarks from deployment traces for user-specified undesirable behaviors. For efficient construction, Anchor-and-Confirm combines programmable retrieval with candidate-level confirmation by a Flash large language model (LLM), while the Anchor Synthesis Loop generates and revises specifications for custom behaviors. The benchmarks use decision-point continuation to evaluate an LLM&#x27;s next turn at a recorded decision point with a behavior-specific rubric, without a reference answer or environment replay. Experiments in coding and general tool use draw on 252,557 sessions and produce 107 benchmarks with 4,125 instances, fulfilling 95.3% of build-target requests. Both human annotators confirm the requested behavior in 84% of sampled instances, and the automated grader&#x27;s agreement with human pass/fail judgments is comparable to that between the annotators. Nine frontier LLMs achieve a mean pass rate of only 26.7%, showing that they still struggle to respond appropriately at the evaluated decision points. Analysis across behavior-specific benchmarks further reveals weaknesses in how current LLMs behave as agents. By turning deployment problems into targeted benchmarks, TraceDance could serve as a key component of the recursive self-improvement (RSI) loop.</p></div></details>
+  </section>
+
+  <section class="section wrap" id="method">
+    <div class="section-heading"><p class="eyebrow">01 / METHOD</p><h2>A deployment problem.<br>A targeted benchmark.</h2><p>Describe an undesirable behavior in natural language. TraceDance finds relevant evidence and turns it into tests of an agent’s next move.</p></div>
+    <ol class="method-steps">
+      <li><span class="step-number">01</span><h3>Specify the behavior</h3><p>Match an existing specification or use the Anchor Synthesis Loop to generate and revise a custom one.</p></li>
+      <li><span class="step-number">02</span><h3>Anchor and confirm</h3><p>Programmable anchors retrieve candidates efficiently. A Fast Model checks whether each candidate exhibits the requested behavior.</p></li>
+      <li><span class="step-number">03</span><h3>Evaluate the next turn</h3><p>Cut the trace at a relevant decision point. Give each model the same recorded prefix and grade its new turn with a behavior-specific rubric.</p></li>
+    </ol>
+    <figure class="paper-figure"><a href="assets/method.png"><img src="assets/method.png" alt="TraceDance architecture: specification selection and synthesis, Anchor-and-Confirm construction, and decision-point continuation evaluation." loading="lazy"></a><figcaption>TraceDance’s construction and evaluation pipeline. Select the figure to open it at full resolution.</figcaption></figure>
+    <div class="protocol"><div><p class="eyebrow">DECISION-POINT CONTINUATION</p><h3>The next move is the test.</h3></div><p>Each model produces exactly one assistant turn, which may include text, tool calls, or both. Three judges score it from 0 to 5; a mean score of at least 4 passes. Evaluation does not execute the proposed tool calls or replay the environment.</p></div>
+  </section>
+
+  <section class="results-band" id="results"><div class="wrap section">
+    <div class="section-heading"><p class="eyebrow">02 / RESULTS</p><h2>How do current agents<br>behave at the decision point?</h2><p>Nine LLMs achieve overall pass rates from 22.9% to 33.5%. Strengths vary across action, failure, and claim benchmarks.</p></div>
+    <div class="chart-controls" hidden><label for="metric">Compare pass rates</label><select id="metric"><option value="1">Overall</option><option value="2">Action</option><option value="3">Failure</option><option value="4">Claim</option><option value="5">Claude Code</option><option value="6">OpenClaw</option></select><span>Higher is better · %</span></div>
+    <div id="ranking" class="ranking" role="img" aria-label="Overall pass rates by model" hidden></div>
+    <details class="table-details" open><summary>Full results table <span aria-hidden="true">+</span></summary><div class="table-scroll" tabindex="0" role="region" aria-label="Model pass rates table"><table id="model-results"><caption>Pass rate (%) by evaluation frame and trace source</caption><thead><tr><th scope="col">Model</th><th scope="col">Overall</th><th scope="col">Action</th><th scope="col">Failure</th><th scope="col">Claim</th><th scope="col">Claude Code</th><th scope="col">OpenClaw</th></tr></thead><tbody>
+      <tr><th scope="row">Claude Opus 4.8</th><td>33.5</td><td>31.5</td><td>37.3</td><td>30.6</td><td>36.1</td><td>27.6</td></tr>
+      <tr><th scope="row">DeepSeek-V4-Pro</th><td>29.3</td><td>30.8</td><td>32.1</td><td>21.2</td><td>31.8</td><td>23.6</td></tr>
+      <tr><th scope="row">GLM-5.2</th><td>28.6</td><td>30.0</td><td>32.1</td><td>19.3</td><td>29.8</td><td>25.8</td></tr>
+      <tr><th scope="row">DeepSeek-V4-Flash</th><td>28.5</td><td>29.0</td><td>32.1</td><td>21.9</td><td>30.8</td><td>23.4</td></tr>
+      <tr><th scope="row">GPT-5.6-Sol</th><td>27.2</td><td>27.8</td><td>23.2</td><td>32.3</td><td>30.2</td><td>20.5</td></tr>
+      <tr><th scope="row">Doubao-Seed-2.1-Pro</th><td>23.5</td><td>26.5</td><td>25.5</td><td>14.5</td><td>24.3</td><td>21.6</td></tr>
+      <tr><th scope="row">MiniMax-M3</th><td>23.3</td><td>25.5</td><td>25.8</td><td>15.1</td><td>23.8</td><td>22.4</td></tr>
+      <tr><th scope="row">Kimi-K3</th><td>23.3</td><td>26.5</td><td>25.3</td><td>14.0</td><td>24.6</td><td>20.4</td></tr>
+      <tr><th scope="row">Qwen3.7-Max</th><td>22.9</td><td>24.9</td><td>26.3</td><td>13.4</td><td>23.9</td><td>20.6</td></tr>
+    </tbody></table></div></details>
+    <p class="figure-note">Main comparison: 107 benchmarks and 4,065 instances with valid responses from all nine models. Rates are averaged across benchmarks. These targeted tests measure behavior at selected decision points, not the frequency of undesirable behavior in deployment.</p>
+    <div class="findings"><div><p class="eyebrow">BEHAVIOR MATTERS</p><h3>The largest gap is<br>checking before acting.</h3><p>Across four requirement groups, valid calls are much easier than completing the checks required before an action.</p></div><div class="requirement-bars" aria-label="Mean pass rates across behavior requirement groups"><div><span>Valid call</span><strong>67.9%</strong><i style="--value:67.9%"></i></div><div><span>Handle failure</span><strong>33.5%</strong><i style="--value:33.5%"></i></div><div><span>Honest claim</span><strong>28.9%</strong><i style="--value:28.9%"></i></div><div><span>Check first</span><strong>8.1%</strong><i style="--value:8.1%"></i></div><p class="figure-note">102 single-behavior benchmarks, 3,966 instances; means across benchmarks and models.</p></div></div>
+    <details class="validation"><summary>How were the benchmarks checked? <span aria-hidden="true">+</span></summary><div><p>In a sample of 100 instances, both human annotators confirmed the requested behavior in 84%. Both rated rubric quality at least 4 out of 5 in 90% of the sample.</p><p>On the 84 instances confirmed by both annotators, automated grading agreed with human pass/fail judgments in 81%, comparable to the 81% agreement between annotators. The automated grader was more lenient on average. Full protocols and sensitivity analyses are in the paper.</p></div></details>
+  </div></section>
+
+  <section class="section wrap" id="case">
+    <div class="section-heading"><p class="eyebrow">03 / CASE STUDY</p><h2>Same error.<br>Different next moves.</h2><p>A package installation fails while an agent sets up a stock-monitoring script. Does the next turn use the error’s guidance?</p></div>
+    <div class="case-layout"><div class="case-context"><p class="eyebrow">SHARED CONTEXT · CONDENSED</p><h3>The tool reports a failure</h3><pre><code>$ pip3 install baostock
+
+error: externally-managed-environment
+
+To install a Python library,
+use a virtual environment:
+  python3 -m venv path/to/venv
+  source path/to/venv/bin/activate
+  python3 -m pip install xyz</code></pre><div class="case-cut">✂ <span>Evaluation input ends here</span></div><p>The rubric asks whether the model uses the error guidance to correct the failed action.</p></div>
+    <div class="case-responses"><div class="case-switch" hidden role="group" aria-label="Choose a model response"><button type="button" data-case="kimi" aria-pressed="true">Kimi-K3</button><button type="button" data-case="opus" aria-pressed="false">Claude Opus 4.8</button></div>
+      <article id="case-kimi" class="case-response"><div class="response-heading"><h3>Kimi-K3</h3><span class="score pass">4.33 / 5 · Pass</span></div><p class="response-action">Creates a virtual environment and installs the packages inside it.</p><p>The generated tool call activates that environment, installs <code>baostock</code> and <code>akshare</code>, and invokes the monitoring script. This addresses the installation failure using the tool’s guidance.</p><p class="judge-scores">Judge scores <strong>4 · 4 · 5</strong></p></article>
+      <article id="case-opus" class="case-response"><div class="response-heading"><h3>Claude Opus 4.8</h3><span class="score fail">2.00 / 5 · Fail</span></div><p class="response-action">Checks for available packages and inspects the skill directory.</p><p>The generated tool call probes whether <code>akshare</code> and <code>baostock</code> can be imported, then lists a local skill directory. It does not apply the environment fix described in the error.</p><p class="judge-scores">Judge scores <strong>2 · 2 · 2</strong></p></article>
+      <p class="figure-note">Condensed from Appendix E.2. Scores evaluate the proposed next turn; the tool calls are not executed during evaluation.</p>
+    </div></div>
+  </section>
+
+  <section class="resources-band" id="resources"><div class="wrap section">
+    <div class="section-heading"><p class="eyebrow">04 / RESOURCES</p><h2>Explore TraceDance.</h2></div>
+    <div class="resource-grid"><div class="resource-item"><span>01 / PAPER</span><h3>Paper forthcoming</h3><p>The paper will be linked here when released.</p></div><div class="resource-item"><span>02 / CODE</span><h3><a data-code-link hidden>Explore the repository ↗</a><span data-code-pending>Under internal review</span></h3><p>Code is currently under internal review. Source deployment traces are not released.</p></div></div>
+    <div class="citation-heading"><h3>Citation</h3><button id="copy-citation" type="button" hidden>Copy BibTeX</button><span id="copy-status" role="status"></span></div>
+    <pre class="citation"><code id="bibtex">@misc{min2026tracedance,
+  title = {TraceDance: An Automated System for Building Agent Behavior Benchmarks from Real-World Agent Deployment Traces},
+  author = {Min, Dehai and Zhang, Daoan and Zeng, Yiming and Zhang, Huayi and Chen, Ziyi and Zhang, Yan and Bai, Qinbo and Chao, Mengyuan and Ning, Jing and Hua, Qiyue and Chen, Huiyi and Zhang, Hanrong and Zou, Henry Peng and Yang, Jie and Xu, Wei and Yu, Philip S.},
+  year = {2026},
+  note = {Preprint}
+}</code></pre>
+  </div></section>
+</main>
+<footer class="wrap"><a class="wordmark" href="#">↳ TraceDance</a><p>From deployment traces to agent behavior benchmarks.</p><a href="#">Back to top ↑</a></footer>
+</body>
+</html>
