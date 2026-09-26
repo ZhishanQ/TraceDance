@@ -10,6 +10,9 @@
   <meta property="og:type" content="website">
   <title>TraceDance | Agent Behavior Benchmarks from Deployment Traces</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&amp;display=swap">
   <link rel="stylesheet" href="styles.css">
   <script src="site-config.js" defer></script>
   <script src="site.js" defer></script>
@@ -31,9 +34,10 @@
       <p class="paper-title">An Automated System for Building Agent Behavior Benchmarks from Real-World Agent Deployment Traces</p>
       <p class="hero-summary">Turn a behavior you want to test into a benchmark drawn from real agent traces. Then ask: <em>what should the agent do next?</em></p>
       <div class="actions">
-        <span class="button" aria-disabled="true">Paper forthcoming</span>
-        <a class="button" href="#method">Explore the method <span aria-hidden="true">↓</span></a>
+        <a class="button primary" href="#method">Explore the method <span aria-hidden="true">↓</span></a>
+        <a class="button" href="#results">See the results <span aria-hidden="true">↓</span></a>
         <a class="button" data-code-link hidden>Code <span aria-hidden="true">↗</span></a>
+        <span class="button muted" aria-disabled="true">Paper forthcoming</span>
       </div>
     </div>
     <div class="trace-art" role="img" aria-label="Illustration: retrieve a deployment trace, confirm a target behavior, cut at its decision point, and evaluate a new next turn.">
@@ -46,13 +50,18 @@
     </div>
   </section>
 
-  <section class="authors wrap" aria-label="Institutions">
+  <section class="authors wrap" aria-label="Authors and affiliations">
+    <p class="author-list">
+      <span>Dehai Min<sup>1,2*</sup></span><span>Daoan Zhang<sup>1*</sup></span><span>Yiming Zeng<sup>1*</sup></span><span>Huayi Zhang<sup>1</sup></span><span>Ziyi Chen<sup>1</sup></span><span>Yan Zhang<sup>1</sup></span><span>Qinbo Bai<sup>1</sup></span><span>Mengyuan Chao<sup>1</sup></span><span>Jing Ning<sup>1</sup></span><span>Qiyue Hua<sup>1</sup></span><span>Huiyi Chen<sup>2</sup></span><span>Hanrong Zhang<sup>2</sup></span><span>Henry Peng Zou<sup>2</sup></span><span>Jie Yang<sup>2</sup></span><span>Wei Xu<sup>1†</sup></span><span>Philip S. Yu<sup>2‡</sup></span>
+    </p>
+    <p class="affiliations"><span><sup>1</sup>ByteDance Inc., USA</span><span><sup>2</sup>University of Illinois at Chicago</span></p>
+    <p class="contributions"><span>* Equal contribution</span><span>† Project head</span><span>‡ Corresponding author</span></p>
     <div class="institution-logos"><img src="assets/bytedance.jpg" width="195" height="45" alt="ByteDance"><img src="assets/uic.jpg" width="51" height="51" alt="UIC"></div>
   </section>
 
   <section class="overview wrap" aria-label="Research overview">
     <p class="eyebrow">THE QUESTION</p>
-    <h2>Finishing the task is only<br>part of the story.</h2>
+    <h2>Finishing the task is only <br>part of the story.</h2>
     <p class="lead">An agent can complete a task while skipping checks, mishandling a failure, or making an unsupported claim. Developers need tests for the specific behaviors they encounter in deployment.</p>
     <div class="stats">
       <div><strong>252,557</strong><span>deployment sessions</span><small>Claude Code + OpenClaw</small></div>
@@ -64,7 +73,7 @@
   </section>
 
   <section class="section wrap" id="method">
-    <div class="section-heading"><p class="eyebrow">01 / METHOD</p><h2>A deployment problem.<br>A targeted benchmark.</h2><p>Describe an undesirable behavior in natural language. TraceDance finds relevant evidence and turns it into tests of an agent’s next move.</p></div>
+    <div class="section-heading"><p class="eyebrow">01 / METHOD</p><h2>A deployment problem. <br>A targeted benchmark.</h2><p>Describe an undesirable behavior in natural language. TraceDance finds relevant evidence and turns it into tests of an agent’s next move.</p></div>
     <ol class="method-steps">
       <li><span class="step-number">01</span><h3>Specify the behavior</h3><p>Match an existing specification or use the Anchor Synthesis Loop to generate and revise a custom one.</p></li>
       <li><span class="step-number">02</span><h3>Anchor and confirm</h3><p>Programmable anchors retrieve candidates efficiently. A Fast Model checks whether each candidate exhibits the requested behavior.</p></li>
@@ -75,7 +84,7 @@
   </section>
 
   <section class="results-band" id="results"><div class="wrap section">
-    <div class="section-heading"><p class="eyebrow">02 / RESULTS</p><h2>How do current agents<br>behave at the decision point?</h2><p>Nine LLMs achieve overall pass rates from 22.9% to 33.5%. Strengths vary across action, failure, and claim benchmarks.</p></div>
+    <div class="section-heading"><p class="eyebrow">02 / RESULTS</p><h2>How do current agents <br>behave at the decision point?</h2><p>Nine LLMs achieve overall pass rates from 22.9% to 33.5%. Strengths vary across action, failure, and claim benchmarks.</p></div>
     <div class="result-charts" hidden>
       <section class="result-chart" aria-labelledby="behavior-chart-title">
         <h3 id="behavior-chart-title">Overall &amp; behavior frame</h3>
@@ -100,12 +109,14 @@
       <tr><th scope="row">Qwen3.7-Max</th><td>22.9</td><td>24.9</td><td>26.3</td><td>13.4</td><td>23.9</td><td>20.6</td></tr>
     </tbody></table></div></details>
     <p class="figure-note">Main comparison: 107 benchmarks and 4,065 instances with valid responses from all nine models. Rates are averaged across benchmarks. These targeted tests measure behavior at selected decision points, not the frequency of undesirable behavior in deployment.</p>
-    <div class="findings"><div><p class="eyebrow">BEHAVIOR MATTERS</p><h3>The largest gap is<br>checking before acting.</h3><p>Across four requirement groups, valid calls are much easier than completing the checks required before an action.</p></div><div class="requirement-bars" aria-label="Mean pass rates across behavior requirement groups"><div><span>Valid call</span><strong>67.9%</strong><i style="--value:67.9%"></i></div><div><span>Handle failure</span><strong>33.5%</strong><i style="--value:33.5%"></i></div><div><span>Honest claim</span><strong>28.9%</strong><i style="--value:28.9%"></i></div><div><span>Check first</span><strong>8.1%</strong><i style="--value:8.1%"></i></div><p class="figure-note">102 single-behavior benchmarks, 3,966 instances; means across benchmarks and models.</p></div></div>
+    <div class="findings"><div><p class="eyebrow">BEHAVIOR MATTERS</p><h3>The largest gap is <br>checking before acting.</h3><p>Across four requirement groups, valid calls are much easier than completing the checks required before an action.</p></div><div class="requirement-bars" aria-label="Mean pass rates across behavior requirement groups"><div><span>Valid call</span><strong>67.9%</strong><i style="--value:67.9%"></i></div><div><span>Handle failure</span><strong>33.5%</strong><i style="--value:33.5%"></i></div><div><span>Honest claim</span><strong>28.9%</strong><i style="--value:28.9%"></i></div><div><span>Check first</span><strong>8.1%</strong><i style="--value:8.1%"></i></div><p class="figure-note">102 single-behavior benchmarks, 3,966 instances; means across benchmarks and models.</p></div></div>
+    <figure class="paper-figure result-figure"><a href="assets/next-move-patterns.png"><img src="assets/next-move-patterns.png" width="2600" height="780" alt="Agent behavior results: (a) mean pass rates by behavior requirement, (b) pass-rate differences associated with the agent's first action, and (c) Claude Opus 4.8 and Kimi-K3 overall and on error-guided correction." loading="lazy"></a><figcaption><strong>Agent behavior at decision points.</strong> (a) Pass rates across behavior requirements. (b) Pass-rate differences between first actions on the same instances; these describe associations, not causal effects. (c) Overall and error-guided correction pass rates for two models.</figcaption></figure>
+    <figure class="paper-figure result-figure"><a href="assets/system-validation.png"><img src="assets/system-validation.png" width="2600" height="851" alt="System validation: (a) query outcomes, (b) construction workload per successful query, and (c) human validation of instances, rubrics, and automated grading." loading="lazy"></a><figcaption><strong>Benchmark construction and validation.</strong> (a) Query outcomes across build and reject requests. (b) Mean construction workload per successful query, on a log scale. (c) Human validation of target behaviors, rubric quality, and automated grading.</figcaption></figure>
     <details class="validation"><summary>How were the benchmarks checked? <span aria-hidden="true">+</span></summary><div><p>In a sample of 100 instances, both human annotators confirmed the requested behavior in 84%. Both rated rubric quality at least 4 out of 5 in 90% of the sample.</p><p>On the 84 instances confirmed by both annotators, automated grading agreed with human pass/fail judgments in 81%, comparable to the 81% agreement between annotators. The automated grader was more lenient on average. Full protocols and sensitivity analyses are in the paper.</p></div></details>
   </div></section>
 
   <section class="section wrap" id="case">
-    <div class="section-heading"><p class="eyebrow">03 / CASE STUDY</p><h2>Same error.<br>Different next moves.</h2><p>A package installation fails while an agent sets up a stock-monitoring script. Does the next turn use the error’s guidance?</p></div>
+    <div class="section-heading"><p class="eyebrow">03 / CASE STUDY</p><h2>Same error. <br>Different next moves.</h2><p>A package installation fails while an agent sets up a stock-monitoring script. Does the next turn use the error’s guidance?</p></div>
     <div class="case-layout"><div class="case-context"><p class="eyebrow">SHARED CONTEXT · CONDENSED</p><h3>The tool reports a failure</h3><pre><code>$ pip3 install baostock
 
 error: externally-managed-environment

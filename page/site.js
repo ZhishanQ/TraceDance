@@ -31,6 +31,20 @@ if (arxivUrl) {
 
 // Both independent charts read the existing table; no joint frame/harness scores are inferred.
 const rows = [...document.querySelectorAll("#model-results tbody tr")].map(row => [...row.children].map(cell => cell.textContent));
+const modelLogos = [
+  ["Claude", "claude"], ["DeepSeek", "deepseek"], ["GLM", "zai"], ["GPT", "openai"],
+  ["Doubao", "doubao"], ["MiniMax", "minimax"], ["Kimi", "kimi"], ["Qwen", "qwen"]
+];
+function logoFor(name) {
+  const match = modelLogos.find(([prefix]) => name.startsWith(prefix));
+  if (!match) return null;
+  const img = document.createElement("img");
+  img.src = `assets/models/${match[1]}.png`;
+  img.alt = "";
+  img.width = 16; img.height = 16;
+  img.className = "rank-logo";
+  return img;
+}
 function renderRanking(metric, ranking) {
   const index = Number(metric.value);
   const sorted = rows.map(row => ({name: row[0], score: Number(row[index])})).sort((a,b) => b.score - a.score);
@@ -42,7 +56,10 @@ function renderRanking(metric, ranking) {
   ranking.append(axis);
   for (const item of sorted) {
     const row = document.createElement("div"); row.className = "rank-row";
-    const name = document.createElement("span"); name.className = "rank-name"; name.textContent = item.name;
+    const name = document.createElement("span"); name.className = "rank-name";
+    const logo = logoFor(item.name);
+    if (logo) name.append(logo);
+    name.append(item.name);
     const track = document.createElement("span"); track.className = "rank-track"; track.style.setProperty("--value",`${item.score}%`);
     const value = document.createElement("span"); value.className = "rank-value"; value.textContent = item.score.toFixed(1);
     row.append(name,track,value); ranking.append(row);
