@@ -30,6 +30,6 @@ After committing the intended website changes, run this command from the reposit
 bash page/publish.sh
 ```
 
-The script checks that `page/` has no uncommitted changes, extracts its committed history with `git subtree split`, and pushes that version to `gh-pages`. A push to `main` alone does not publish the website.
+The script checks that `page/` has no uncommitted changes, creates a deployment commit containing that directory's committed files, and pushes it to `gh-pages`. It uses standard Git commands without extra tooling. A push to `main` alone does not publish the website.
 
 The project README lives at the repository root; keep website development instructions here. Paper files must not be added or published without explicit author approval.
