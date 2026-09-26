@@ -14,7 +14,7 @@ Open `http://localhost:8000/`.
 - `styles.css`: responsive page styles.
 - `site.js`: result and case selectors, citation copying.
 - `site-config.js`: public links. The code link remains empty until the system code is released.
-- `assets/`: method figure and institution logos.
+- `assets/`: method and result figures, plus institution logos. The project README also uses these figures. `assets/models/` holds the small model logos shown next to each model in the result charts.
 
 The chart reads its values from the HTML results table. When updating the paper, also check the website's statistics, case descriptions, and citation.
 

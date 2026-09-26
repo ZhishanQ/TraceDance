@@ -1,5 +1,5 @@
 @charset "UTF-8";
-:root{--paper:#f7f8f4;--ink:#192b35;--muted:#596970;--blue:#2959a7;--teal:#19776f;--line:#d3dcd9;--serif:Georgia,'Times New Roman',serif;--sans:Arial,Helvetica,sans-serif}
+:root{--paper:#f7f8f4;--ink:#192b35;--muted:#596970;--blue:#2959a7;--teal:#19776f;--line:#d3dcd9;--serif:'Source Serif 4',Georgia,'Times New Roman',serif;--sans:Inter,Arial,Helvetica,sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:96px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 var(--sans)}[hidden]{display:none!important}a{color:inherit;text-decoration:none}a:hover{color:var(--blue)}button,select{font:inherit}button,a,select,summary{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--teal);outline-offset:5px}img{display:block;max-width:100%;height:auto}p,h1,h2,h3,figure{margin:0}p+p{margin-top:16px}h1,h2,h3{line-height:1.1}sup{font-size:.66em;margin-left:2px}code{font-size:.91em}pre{white-space:pre-wrap;overflow-wrap:anywhere}button{cursor:pointer}.wrap{width:min(1160px,calc(100% - 80px));margin-inline:auto}.skip{position:fixed;top:-80px;left:16px;z-index:99;background:white;padding:12px}.skip:focus{top:12px}
 .site-header{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:19px max(40px,calc((100vw - 1240px)/2));border-bottom:1px solid var(--line);background:rgba(247,248,244,.97);position:sticky;top:0;z-index:10}.wordmark{font-size:21px;font-weight:700;letter-spacing:-.8px;white-space:nowrap}.brand-symbol{color:var(--blue);margin-right:7px}.site-header nav{display:flex;gap:29px;font-size:13px;font-weight:600}.nav-paper{font-size:13px;font-weight:600;border-bottom:1px solid var(--ink)}.nav-paper span{margin-left:14px}
 .hero{padding-top:80px;padding-bottom:60px;display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center}.eyebrow{font:11px/1.6 var(--sans);font-weight:700;letter-spacing:1.8px;color:var(--blue)}.status-dot{width:7px;height:7px;display:inline-block;border-radius:50%;background:var(--teal);margin-right:7px}.hero h1{font:clamp(62px,6.6vw,94px)/1.08 var(--serif);letter-spacing:-5px;margin:22px 0}.hero h1 span{color:var(--blue)}.paper-title{font-size:24px;line-height:1.35;letter-spacing:-.55px;max-width:640px}.hero-summary{font-size:16px;line-height:1.75;max-width:540px;color:var(--muted);margin-top:22px}.hero-summary em{font-family:var(--serif);font-size:19px;color:var(--ink)}.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}.button{border:1px solid var(--line);border-radius:4px;padding:11px 15px;display:inline-flex;align-items:center;gap:22px;font-size:13px;font-weight:600;transition:background .15s}.button.primary{background:var(--blue);border-color:var(--blue);color:white}.button:hover{background:#e8eee9}.button.primary:hover{background:#20487f}
@@ -28,3 +28,22 @@
 #model-results thead tr:nth-child(2) th:first-child{text-align:right;padding-left:10px}
 @media(max-width:1000px){.result-charts{grid-template-columns:1fr;gap:20px}}
 @media(max-width:720px){.result-chart .rank-row{grid-template-columns:139px minmax(0,1fr) 33px;gap:8px}.result-chart .rank-name{font-size:10px}.result-chart .rank-axis{padding-left:147px;padding-right:41px}}
+
+/* Authors, primary actions, model logos, and result figures. */
+.authors{padding:34px 0 28px}
+.author-list{max-width:980px;margin:0 auto;font-size:15px;line-height:1.9}
+.author-list span{white-space:nowrap}
+.author-list sup,.affiliations sup{color:var(--blue);font-weight:600}
+.affiliations{color:var(--muted)}
+.contributions{display:flex;justify-content:center;gap:4px 18px;flex-wrap:wrap}
+.contributions span{margin:0}
+.institution-logos{margin-top:24px}
+.button.primary{box-shadow:0 6px 16px #2959a72e}
+.button.muted{color:var(--muted);border-style:dashed;cursor:default}
+.button.muted:hover{background:transparent}
+.rank-name{display:flex;align-items:center;gap:8px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-logo{width:16px;height:16px;flex-shrink:0;border-radius:3px;object-fit:contain}
+.result-figure{margin-top:48px}
+.result-figure figcaption strong{color:var(--ink);font-weight:600}
+.result-figure+.result-figure{margin-top:28px}
+@media(max-width:720px){h2 br,.findings h3 br{display:none}.author-list{font-size:12px;line-height:1.8}.result-figure{margin-top:32px}.rank-logo{width:13px;height:13px}.rank-name{gap:6px}}
