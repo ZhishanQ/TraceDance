@@ -46,27 +46,7 @@
     </div>
   </section>
 
-  <section class="authors wrap" aria-label="Authors and affiliations">
-    <p class="author-list">
-      <a href="https://openreview.net/profile?id=~Dehai_Min1">Dehai Min<sup>1,2,*</sup></a>
-      <a href="https://openreview.net/profile?id=~Daoan_Zhang2">Daoan Zhang<sup>1,*</sup></a>
-      <a href="https://openreview.net/profile?id=~Yiming_Zeng3">Yiming Zeng<sup>1,*</sup></a>
-      <a href="https://openreview.net/profile?id=~Huayi_Zhang1">Huayi Zhang<sup>1</sup></a>
-      <a href="https://openreview.net/profile?id=~Ziyi_Chen8">Ziyi Chen<sup>1</sup></a>
-      <a href="https://openreview.net/profile?id=~Yan_Zhang12">Yan Zhang<sup>1</sup></a>
-      <a href="https://openreview.net/profile?id=~Qinbo_Bai1">Qinbo Bai<sup>1</sup></a>
-      <a href="https://openreview.net/profile?id=~Mengyuan_Chao1">Mengyuan Chao<sup>1</sup></a>
-      <a href="https://openreview.net/profile?id=~JING_NING2">Jing Ning<sup>1</sup></a>
-      <a href="https://openreview.net/profile?id=~Qiyue_Hua1">Qiyue Hua<sup>1</sup></a>
-      <a href="https://openreview.net/profile?id=~Huiyi_Chen1">Huiyi Chen<sup>2</sup></a>
-      <a href="https://openreview.net/profile?id=~Hanrong_Zhang1">Hanrong Zhang<sup>2</sup></a>
-      <a href="https://openreview.net/profile?id=~Henry_Peng_Zou1">Henry Peng Zou<sup>2</sup></a>
-      <a href="https://openreview.net/profile?id=~Jie_Yang33">Jie Yang<sup>2</sup></a>
-      <a href="https://openreview.net/profile?id=~Wei_Xu24">Wei Xu<sup>1,+</sup></a>
-      <a href="https://openreview.net/profile?id=~Philip_S._Yu1">Philip S. Yu<sup>2,^</sup></a>
-    </p>
-    <p class="affiliations"><span><sup>1</sup> ByteDance Inc., USA</span><span><sup>2</sup> University of Illinois at Chicago</span></p>
-    <p class="contributions">* Equal Contribution <span>+ Project Head</span> <span>^ Corresponding Author</span></p>
+  <section class="authors wrap" aria-label="Institutions">
     <div class="institution-logos"><img src="assets/bytedance.jpg" width="195" height="45" alt="ByteDance"><img src="assets/uic.jpg" width="51" height="51" alt="UIC"></div>
   </section>
 
@@ -96,9 +76,19 @@
 
   <section class="results-band" id="results"><div class="wrap section">
     <div class="section-heading"><p class="eyebrow">02 / RESULTS</p><h2>How do current agents<br>behave at the decision point?</h2><p>Nine LLMs achieve overall pass rates from 22.9% to 33.5%. Strengths vary across action, failure, and claim benchmarks.</p></div>
-    <div class="chart-controls" hidden><label for="metric">Compare pass rates</label><select id="metric"><option value="1">Overall</option><option value="2">Action</option><option value="3">Failure</option><option value="4">Claim</option><option value="5">Claude Code</option><option value="6">OpenClaw</option></select><span>Higher is better · %</span></div>
-    <div id="ranking" class="ranking" role="img" aria-label="Overall pass rates by model" hidden></div>
-    <details class="table-details" open><summary>Full results table <span aria-hidden="true">+</span></summary><div class="table-scroll" tabindex="0" role="region" aria-label="Model pass rates table"><table id="model-results"><caption>Pass rate (%) by evaluation frame and trace source</caption><thead><tr><th scope="col">Model</th><th scope="col">Overall</th><th scope="col">Action</th><th scope="col">Failure</th><th scope="col">Claim</th><th scope="col">Claude Code</th><th scope="col">OpenClaw</th></tr></thead><tbody>
+    <div class="result-charts" hidden>
+      <section class="result-chart" aria-labelledby="behavior-chart-title">
+        <h3 id="behavior-chart-title">Overall &amp; behavior frame</h3>
+        <div class="chart-controls"><label for="metric">View</label><select id="metric"><option value="1">Overall</option><option value="2">Action</option><option value="3">Failure</option><option value="4">Claim</option></select><span>Pass rate · %</span></div>
+        <div id="ranking" class="ranking" role="img" aria-label="Overall pass rates by model"></div>
+      </section>
+      <section class="result-chart" aria-labelledby="harness-chart-title">
+        <h3 id="harness-chart-title">By harness</h3>
+        <div class="chart-controls"><label for="harness">Harness</label><select id="harness"><option value="5">Claude Code</option><option value="6">OpenClaw</option></select><span>Pass rate · %</span></div>
+        <div id="harness-ranking" class="ranking" role="img" aria-label="Claude Code pass rates by model"></div>
+      </section>
+    </div>
+    <details class="table-details" open><summary>Full results table <span aria-hidden="true">+</span></summary><div class="table-scroll" tabindex="0" role="region" aria-label="Model pass rates table"><table id="model-results"><caption>Pass rate (%) by behavior frame and harness</caption><thead><tr><th scope="col" rowspan="2">Model</th><th scope="col" rowspan="2">Overall</th><th scope="colgroup" colspan="3">Behavior frame</th><th scope="colgroup" colspan="2">Harness</th></tr><tr><th scope="col">Action</th><th scope="col">Failure</th><th scope="col">Claim</th><th scope="col">Claude Code</th><th scope="col">OpenClaw</th></tr></thead><tbody>
       <tr><th scope="row">Claude Opus 4.8</th><td>33.5</td><td>31.5</td><td>37.3</td><td>30.6</td><td>36.1</td><td>27.6</td></tr>
       <tr><th scope="row">DeepSeek-V4-Pro</th><td>29.3</td><td>30.8</td><td>32.1</td><td>21.2</td><td>31.8</td><td>23.6</td></tr>
       <tr><th scope="row">GLM-5.2</th><td>28.6</td><td>30.0</td><td>32.1</td><td>19.3</td><td>29.8</td><td>25.8</td></tr>

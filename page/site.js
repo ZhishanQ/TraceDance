@@ -29,11 +29,9 @@ if (arxivUrl) {
   document.querySelector(".actions").append(link);
 }
 
-// The accessible, static table is the only source of values for the chart.
+// Both independent charts read the existing table; no joint frame/harness scores are inferred.
 const rows = [...document.querySelectorAll("#model-results tbody tr")].map(row => [...row.children].map(cell => cell.textContent));
-const metric = document.querySelector("#metric");
-const ranking = document.querySelector("#ranking");
-function renderRanking() {
+function renderRanking(metric, ranking) {
   const index = Number(metric.value);
   const sorted = rows.map(row => ({name: row[0], score: Number(row[index])})).sort((a,b) => b.score - a.score);
   const label = metric.selectedOptions[0].textContent;
@@ -51,11 +49,14 @@ function renderRanking() {
   }
   ranking.setAttribute("aria-label",`${label} pass rates: ${sorted.map(item => `${item.name} ${item.score}%`).join(", ")}`);
 }
-document.querySelector(".chart-controls").hidden = false;
-ranking.hidden = false;
+document.querySelector(".result-charts").hidden = false;
 document.querySelector(".table-details").open = false;
-metric.addEventListener("change",renderRanking);
-renderRanking();
+for (const [selectId, chartId] of [["metric", "ranking"], ["harness", "harness-ranking"]]) {
+  const select = document.getElementById(selectId);
+  const chart = document.getElementById(chartId);
+  select.addEventListener("change", () => renderRanking(select, chart));
+  renderRanking(select, chart);
+}
 
 const caseButtons = [...document.querySelectorAll("[data-case]")];
 document.querySelector(".case-switch").hidden = false;
