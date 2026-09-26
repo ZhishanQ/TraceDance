@@ -12,4 +12,4 @@ Code is currently under internal review. Source deployment traces are not releas
 
 ## Project website
 
-The website source and its development instructions are in [`page/`](page/README.md).
+[Visit the project website](https://zhishanq.github.io/TraceDance/). Source files and development instructions are in [`page/`](page/README.md).
