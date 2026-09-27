@@ -26,8 +26,8 @@ The figure compares pass rates across behavior requirements, contrasts different
 
 ## Code availability
 
-Code is currently under internal review. Source deployment traces are not released.
+Code is currently under internal review.
 
 ## Project website
 
-[Visit the project website](https://zhishanq.github.io/TraceDance/). Source files and development instructions are in [`page/`](page/README.md).
+[Visit the project website](https://zhishanq.github.io/TraceDance/).
