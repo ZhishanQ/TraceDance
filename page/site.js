@@ -87,16 +87,55 @@ function showCase(name) {
 caseButtons.forEach(button => button.addEventListener("click",() => showCase(button.dataset.case)));
 showCase("kimi");
 
-const copyButton = document.querySelector("#copy-citation");
-copyButton.hidden = false;
-copyButton.addEventListener("click",async () => {
-  const citation = document.querySelector("#bibtex");
-  try {
-    await navigator.clipboard.writeText(citation.textContent);
-    document.querySelector("#copy-status").textContent = "Copied";
-  } catch {
-    const range = document.createRange(); range.selectNodeContents(citation);
-    const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
-    document.querySelector("#copy-status").textContent = "Selected; press Ctrl/Cmd+C";
+// Figure previews stay on this page. Native dialog handles Escape and background inertness.
+const viewer = document.getElementById("figure-viewer");
+const viewerImage = document.getElementById("figure-viewer-image");
+const viewerBody = viewer.querySelector(".viewer-body");
+const zoomToggle = document.getElementById("figure-zoom-toggle");
+let figureTrigger = null;
+function setFigureZoom(zoomed) {
+  viewer.classList.toggle("is-zoomed", zoomed);
+  zoomToggle.setAttribute("aria-pressed", String(zoomed));
+  zoomToggle.textContent = zoomed ? "Fit to screen" : "Zoom in";
+  viewerBody.scrollTo(0, 0);
+}
+for (const trigger of document.querySelectorAll(".figure-zoom")) {
+  trigger.disabled = false;
+  trigger.addEventListener("click", () => {
+    const source = trigger.querySelector("img");
+    figureTrigger = trigger;
+    viewerImage.src = source.currentSrc || source.src;
+    viewerImage.alt = source.alt;
+    document.getElementById("figure-viewer-title").textContent = trigger.dataset.figureTitle;
+    document.getElementById("figure-viewer-caption").textContent = trigger.closest("figure").querySelector("figcaption").textContent;
+    setFigureZoom(false);
+    viewer.showModal();
+    document.documentElement.classList.add("modal-open");
+  });
+}
+zoomToggle.addEventListener("click", () => setFigureZoom(!viewer.classList.contains("is-zoomed")));
+document.getElementById("figure-close").addEventListener("click", () => viewer.close());
+viewer.addEventListener("keydown", event => {
+  if (event.key !== "Tab") return;
+  const controls = [...viewer.querySelectorAll('button:not([disabled]), [tabindex="0"]')];
+  const first = controls[0];
+  const last = controls[controls.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
   }
+});
+let backdropPress = false;
+viewer.addEventListener("pointerdown", event => { backdropPress = event.target === viewer; });
+viewer.addEventListener("click", event => {
+  if (backdropPress && event.target === viewer) viewer.close();
+  backdropPress = false;
+});
+viewer.addEventListener("close", () => {
+  document.documentElement.classList.remove("modal-open");
+  setFigureZoom(false);
+  figureTrigger?.focus({preventScroll: true});
 });

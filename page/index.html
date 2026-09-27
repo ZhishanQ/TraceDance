@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TraceDance builds targeted agent behavior benchmarks from real-world deployment traces. Explore the method, results across nine LLMs, and a decision-point continuation case.">
-  <meta name="theme-color" content="#f7f8f4">
+  <meta name="theme-color" content="#ffffff">
   <meta property="og:title" content="TraceDance | Agent Behavior Benchmarks from Deployment Traces">
   <meta property="og:description" content="From deployment problems to targeted tests of an agent’s next move.">
   <meta property="og:type" content="website">
@@ -12,7 +12,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
   <link rel="stylesheet" href="styles.css">
   <script src="site-config.js" defer></script>
   <script src="site.js" defer></script>
@@ -50,12 +50,8 @@
     </div>
   </section>
 
-  <section class="authors wrap" aria-label="Authors and affiliations">
-    <p class="author-list">
-      <span>Dehai Min<sup>1,2*</sup></span><span>Daoan Zhang<sup>1*</sup></span><span>Yiming Zeng<sup>1*</sup></span><span>Huayi Zhang<sup>1</sup></span><span>Ziyi Chen<sup>1</sup></span><span>Yan Zhang<sup>1</sup></span><span>Qinbo Bai<sup>1</sup></span><span>Mengyuan Chao<sup>1</sup></span><span>Jing Ning<sup>1</sup></span><span>Qiyue Hua<sup>1</sup></span><span>Huiyi Chen<sup>2</sup></span><span>Hanrong Zhang<sup>2</sup></span><span>Henry Peng Zou<sup>2</sup></span><span>Jie Yang<sup>2</sup></span><span>Wei Xu<sup>1†</sup></span><span>Philip S. Yu<sup>2‡</sup></span>
-    </p>
-    <p class="affiliations"><span><sup>1</sup>ByteDance Inc., USA</span><span><sup>2</sup>University of Illinois at Chicago</span></p>
-    <p class="contributions"><span>* Equal contribution</span><span>† Project head</span><span>‡ Corresponding author</span></p>
+  <section class="contact-strip wrap" aria-label="Correspondence and institutions">
+    <p><strong>Correspondence:</strong> Dehai Min (<a href="mailto:dmin10@uic.edu">dmin10@uic.edu</a>)</p>
     <div class="institution-logos"><img src="assets/bytedance.jpg" width="195" height="45" alt="ByteDance"><img src="assets/uic.jpg" width="51" height="51" alt="UIC"></div>
   </section>
 
@@ -79,7 +75,7 @@
       <li><span class="step-number">02</span><h3>Anchor and confirm</h3><p>Programmable anchors retrieve candidates efficiently. A Fast Model checks whether each candidate exhibits the requested behavior.</p></li>
       <li><span class="step-number">03</span><h3>Evaluate the next turn</h3><p>Cut the trace at a relevant decision point. Give each model the same recorded prefix and grade its new turn with a behavior-specific rubric.</p></li>
     </ol>
-    <figure class="paper-figure"><a href="assets/method.png"><img src="assets/method.png" alt="TraceDance architecture: specification selection and synthesis, Anchor-and-Confirm construction, and decision-point continuation evaluation." loading="lazy"></a><figcaption>TraceDance’s construction and evaluation pipeline. Select the figure to open it at full resolution.</figcaption></figure>
+    <figure class="paper-figure"><button class="figure-zoom" type="button" data-figure-title="TraceDance construction and evaluation pipeline" aria-label="Enlarge: TraceDance construction and evaluation pipeline" aria-haspopup="dialog" disabled><img src="assets/method.svg" alt="TraceDance architecture: specification selection and synthesis, Anchor-and-Confirm construction, and decision-point continuation evaluation." loading="lazy"><span class="zoom-hint" aria-hidden="true">View larger</span></button><figcaption>TraceDance’s construction and evaluation pipeline. Select the figure to enlarge it.</figcaption></figure>
     <div class="protocol"><div><p class="eyebrow">DECISION-POINT CONTINUATION</p><h3>The next move is the test.</h3></div><p>Each model produces exactly one assistant turn, which may include text, tool calls, or both. Three judges score it from 0 to 5; a mean score of at least 4 passes. Evaluation does not execute the proposed tool calls or replay the environment.</p></div>
   </section>
 
@@ -110,8 +106,10 @@
     </tbody></table></div></details>
     <p class="figure-note">Main comparison: 107 benchmarks and 4,065 instances with valid responses from all nine models. Rates are averaged across benchmarks. These targeted tests measure behavior at selected decision points, not the frequency of undesirable behavior in deployment.</p>
     <div class="findings"><div><p class="eyebrow">BEHAVIOR MATTERS</p><h3>The largest gap is <br>checking before acting.</h3><p>Across four requirement groups, valid calls are much easier than completing the checks required before an action.</p></div><div class="requirement-bars" aria-label="Mean pass rates across behavior requirement groups"><div><span>Valid call</span><strong>67.9%</strong><i style="--value:67.9%"></i></div><div><span>Handle failure</span><strong>33.5%</strong><i style="--value:33.5%"></i></div><div><span>Honest claim</span><strong>28.9%</strong><i style="--value:28.9%"></i></div><div><span>Check first</span><strong>8.1%</strong><i style="--value:8.1%"></i></div><p class="figure-note">102 single-behavior benchmarks, 3,966 instances; means across benchmarks and models.</p></div></div>
-    <figure class="paper-figure result-figure"><a href="assets/next-move-patterns.png"><img src="assets/next-move-patterns.png" width="2600" height="780" alt="Agent behavior results: (a) mean pass rates by behavior requirement, (b) pass-rate differences associated with the agent's first action, and (c) Claude Opus 4.8 and Kimi-K3 overall and on error-guided correction." loading="lazy"></a><figcaption><strong>Agent behavior at decision points.</strong> (a) Pass rates across behavior requirements. (b) Pass-rate differences between first actions on the same instances; these describe associations, not causal effects. (c) Overall and error-guided correction pass rates for two models.</figcaption></figure>
-    <figure class="paper-figure result-figure"><a href="assets/system-validation.png"><img src="assets/system-validation.png" width="2600" height="851" alt="System validation: (a) query outcomes, (b) construction workload per successful query, and (c) human validation of instances, rubrics, and automated grading." loading="lazy"></a><figcaption><strong>Benchmark construction and validation.</strong> (a) Query outcomes across build and reject requests. (b) Mean construction workload per successful query, on a log scale. (c) Human validation of target behaviors, rubric quality, and automated grading.</figcaption></figure>
+    <div class="figure-gallery" aria-label="Figures from the paper">
+    <figure class="paper-figure result-figure"><button class="figure-zoom" type="button" data-figure-title="Agent behavior at decision points" aria-label="Enlarge: Agent behavior at decision points" aria-haspopup="dialog" disabled><img src="assets/next-move-patterns.svg" width="2600" height="780" alt="Agent behavior results: (a) mean pass rates by behavior requirement, (b) pass-rate differences associated with the agent's first action, and (c) Claude Opus 4.8 and Kimi-K3 overall and on error-guided correction." loading="lazy"><span class="zoom-hint" aria-hidden="true">View larger</span></button><figcaption><strong>Agent behavior at decision points.</strong> (a) Pass rates across behavior requirements. (b) Pass-rate differences between first actions on the same instances; these describe associations, not causal effects. (c) Overall and error-guided correction pass rates for two models.</figcaption></figure>
+    <figure class="paper-figure result-figure"><button class="figure-zoom" type="button" data-figure-title="Benchmark construction and validation" aria-label="Enlarge: Benchmark construction and validation" aria-haspopup="dialog" disabled><img src="assets/system-validation.svg" width="2600" height="851" alt="System validation: (a) query outcomes, (b) construction workload per successful query, and (c) human validation of instances, rubrics, and automated grading." loading="lazy"><span class="zoom-hint" aria-hidden="true">View larger</span></button><figcaption><strong>Benchmark construction and validation.</strong> (a) Query outcomes across build and reject requests. (b) Mean construction workload per successful query, on a log scale. (c) Human validation of target behaviors, rubric quality, and automated grading.</figcaption></figure>
+    </div>
     <details class="validation"><summary>How were the benchmarks checked? <span aria-hidden="true">+</span></summary><div><p>In a sample of 100 instances, both human annotators confirmed the requested behavior in 84%. Both rated rubric quality at least 4 out of 5 in 90% of the sample.</p><p>On the 84 instances confirmed by both annotators, automated grading agreed with human pass/fail judgments in 81%, comparable to the 81% agreement between annotators. The automated grader was more lenient on average. Full protocols and sensitivity analyses are in the paper.</p></div></details>
   </div></section>
 
@@ -136,15 +134,22 @@ use a virtual environment:
   <section class="resources-band" id="resources"><div class="wrap section">
     <div class="section-heading"><p class="eyebrow">04 / RESOURCES</p><h2>Explore TraceDance.</h2></div>
     <div class="resource-grid"><div class="resource-item"><span>01 / PAPER</span><h3>Paper forthcoming</h3><p>The paper will be linked here when released.</p></div><div class="resource-item"><span>02 / CODE</span><h3><a data-code-link hidden>Explore the repository ↗</a><span data-code-pending>Under internal review</span></h3><p>Code is currently under internal review. Source deployment traces are not released.</p></div></div>
-    <div class="citation-heading"><h3>Citation</h3><button id="copy-citation" type="button" hidden>Copy BibTeX</button><span id="copy-status" role="status"></span></div>
-    <pre class="citation"><code id="bibtex">@misc{min2026tracedance,
-  title = {TraceDance: An Automated System for Building Agent Behavior Benchmarks from Real-World Agent Deployment Traces},
-  author = {Min, Dehai and Zhang, Daoan and Zeng, Yiming and Zhang, Huayi and Chen, Ziyi and Zhang, Yan and Bai, Qinbo and Chao, Mengyuan and Ning, Jing and Hua, Qiyue and Chen, Huiyi and Zhang, Hanrong and Zou, Henry Peng and Yang, Jie and Xu, Wei and Yu, Philip S.},
-  year = {2026},
-  note = {Preprint}
-}</code></pre>
+    <section class="citation-section" aria-labelledby="citation-title">
+      <h3 id="citation-title">Citation</h3>
+      <p class="citation-placeholder">Citation details will be added after the paper is released.</p>
+      <pre class="citation" hidden><code id="bibtex"></code></pre>
+    </section>
   </div></section>
 </main>
+<dialog id="figure-viewer" aria-labelledby="figure-viewer-title">
+  <div class="viewer-toolbar">
+    <h2 id="figure-viewer-title">Figure</h2>
+    <button id="figure-zoom-toggle" type="button" aria-pressed="false">Zoom in</button>
+    <button id="figure-close" type="button" aria-label="Close enlarged figure" autofocus><span aria-hidden="true">×</span></button>
+  </div>
+  <div class="viewer-body" tabindex="0" aria-label="Enlarged figure; scroll to explore when zoomed"><img id="figure-viewer-image" alt=""></div>
+  <p class="viewer-caption" id="figure-viewer-caption"></p>
+</dialog>
 <footer class="wrap"><a class="wordmark" href="#">↳ TraceDance</a><p>From deployment traces to agent behavior benchmarks.</p><a href="#">Back to top ↑</a></footer>
 </body>
 </html>
