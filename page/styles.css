@@ -203,9 +203,7 @@ tbody th { font-weight: 400; }
 .resource-item > span { font-size: var(--label); letter-spacing: 1px; color: var(--muted); }
 .resource-item h3 { margin: 12px 0; }
 .resource-item p { color: var(--muted); }
-.github-repository { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin-top: 12px; border: 1px solid var(--line); border-radius: 16px; color: var(--ink); background: #fff; transition: color .15s, border-color .15s; }
-.github-repository svg { width: 36px; height: 36px; }
-.github-repository:hover { color: var(--blue); border-color: currentColor; }
+.github-repository { margin-top: 12px; }
 .citation-section { margin-top: 32px; border-top: 1px solid var(--line); padding-top: 24px; }
 .citation-placeholder { margin-top: 10px; color: var(--muted); }
 footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 26px; }
