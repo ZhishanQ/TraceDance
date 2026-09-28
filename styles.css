@@ -40,8 +40,8 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 
 /* Navigation and hero */
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px max(32px, calc((100vw - 1240px)/2)); border-bottom: 1px solid var(--line); background: rgb(255 255 255 / 97%); position: sticky; top: 0; z-index: 10; }
-.wordmark { font-size: 21px; font-weight: 700; letter-spacing: -.6px; white-space: nowrap; }
-.brand-symbol { color: var(--blue); margin-right: 6px; }
+.wordmark { display: inline-flex; align-items: center; flex-shrink: 0; }
+.brand-logo { display: block; width: 210px; height: auto; aspect-ratio: 1830 / 420; }
 .site-header nav { display: flex; gap: 28px; font-size: var(--small); font-weight: 500; }
 .nav-paper { font-size: var(--small); color: var(--muted); }
 .hero { padding-block: 52px; display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; align-items: center; }
@@ -240,7 +240,7 @@ footer p, footer > a:last-child { font-size: var(--small); color: var(--muted); 
   .site-header { padding: 12px 18px; flex-wrap: wrap; gap: 12px; }
   .site-header nav { order: 3; flex-basis: 100%; justify-content: space-between; gap: 12px; font-size: 13px; padding-top: 8px; border-top: 1px solid var(--line); }
   .nav-paper { font-size: 12px; margin-left: auto; }
-  .site-header .wordmark { font-size: 20px; }
+  .site-header .brand-logo { width: 175px; }
   .hero { display: flex; flex-direction: column; align-items: stretch; gap: 30px; padding-block: 32px; }
   .hero h1 { font-size: clamp(42px, 10vw, 56px); letter-spacing: -1.8px; }
   .hero .eyebrow { font-size: 11px; letter-spacing: .8px; }
