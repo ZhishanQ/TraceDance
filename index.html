@@ -36,8 +36,8 @@
       <div class="actions">
         <a class="button primary" href="#method">Explore the method <span aria-hidden="true">↓</span></a>
         <a class="button" href="#results">See the results <span aria-hidden="true">↓</span></a>
-        <a class="button" data-code-link hidden>Code <span aria-hidden="true">↗</span></a>
         <span class="button muted" aria-disabled="true">Paper forthcoming</span>
+        <a class="button code-button" data-code-link href="https://github.com/ZhishanQ/TraceDance" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297C5.37.297 0 5.67 0 12.297c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.043-1.61-4.043-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.084-.729.084-.729 1.205.084 1.838 1.237 1.838 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.467-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23a11.5 11.5 0 0 1 3-.404c1.02.005 2.045.138 3 .404 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg> Code</a>
       </div>
     </div>
     <div class="trace-art" role="img" aria-label="Illustration: retrieve a deployment trace, confirm a target behavior, cut at its decision point, and evaluate a new next turn.">
@@ -46,7 +46,11 @@
       <div class="trace-event"><span class="event-dot"></span><div><small>ASSISTANT → TOOL</small><strong>An action, a result, a choice</strong></div><span class="event-time">02</span></div>
       <div class="cut"><span>DECISION POINT</span><span aria-hidden="true">✂</span></div>
       <div class="next-turn"><span class="next-marker" aria-hidden="true">↳</span><div><small>EVALUATED MODEL</small><strong>What happens next?</strong><p>One new turn. A behavior-specific rubric.</p></div></div>
-      <div class="art-bottom"><span>Retrieve</span><i aria-hidden="true">→</i><span>Confirm</span><i aria-hidden="true">→</i><span class="selected">Evaluate</span></div>
+      <ol class="art-bottom" aria-hidden="true">
+        <li><span class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4.5 4.5"/></svg></span><span>Retrieve</span></li>
+        <li><span class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="15" height="15" rx="5"/><path d="m8 12 2.5 2.5 5.5-5.5"/></svg></span><span>Confirm</span></li>
+        <li><span class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17v-5m6 5V7m6 10V4"/><path d="M4 20h16"/></svg></span><span>Evaluate</span></li>
+      </ol>
     </div>
   </section>
 
@@ -125,15 +129,30 @@ use a virtual environment:
   source path/to/venv/bin/activate
   python3 -m pip install xyz</code></pre><div class="case-cut">✂ <span>Evaluation input ends here</span></div><p>The rubric asks whether the model uses the error guidance to correct the failed action.</p></div>
     <div class="case-responses"><div class="case-switch" hidden role="group" aria-label="Choose a model response"><button type="button" data-case="kimi" aria-pressed="true">Kimi-K3</button><button type="button" data-case="opus" aria-pressed="false">Claude Opus 4.8</button></div>
-      <article id="case-kimi" class="case-response"><div class="response-heading"><h3>Kimi-K3</h3><span class="score pass">4.33 / 5 · Pass</span></div><p class="response-action">Creates a virtual environment and installs the packages inside it.</p><p>The generated tool call activates that environment, installs <code>baostock</code> and <code>akshare</code>, and invokes the monitoring script. This addresses the installation failure using the tool’s guidance.</p><p class="judge-scores">Judge scores <strong>4 · 4 · 5</strong></p></article>
-      <article id="case-opus" class="case-response"><div class="response-heading"><h3>Claude Opus 4.8</h3><span class="score fail">2.00 / 5 · Fail</span></div><p class="response-action">Checks for available packages and inspects the skill directory.</p><p>The generated tool call probes whether <code>akshare</code> and <code>baostock</code> can be imported, then lists a local skill directory. It does not apply the environment fix described in the error.</p><p class="judge-scores">Judge scores <strong>2 · 2 · 2</strong></p></article>
-      <p class="figure-note">Condensed from Appendix E.2. Scores evaluate the proposed next turn; the tool calls are not executed during evaluation.</p>
+      <article id="case-kimi" class="case-response"><div class="response-heading"><h3>Kimi-K3</h3><span class="score pass">4.33 / 5 · Pass</span></div><div class="response-tool"><p class="eyebrow">MODEL RESPONSE · TOOL CALL <span>exec</span></p><pre><code>command: python3 -m venv [WORKSPACE]/venv
+    &amp;&amp; source [WORKSPACE]/venv/bin/activate
+    &amp;&amp; pip install baostock akshare
+    &amp;&amp; python [WORKSPACE]/monitor_holdings_baostock.py
+timeout: 120</code></pre></div><p class="response-action">Creates a virtual environment and installs the packages inside it.</p><p>The generated tool call activates that environment, installs <code>baostock</code> and <code>akshare</code>, and invokes the monitoring script. This addresses the installation failure using the tool’s guidance.</p><p class="judge-scores">Judge scores <strong>4 · 4 · 5</strong></p></article>
+      <article id="case-opus" class="case-response"><div class="response-heading"><h3>Claude Opus 4.8</h3><span class="score fail">2.00 / 5 · Fail</span></div><div class="response-tool"><p class="eyebrow">MODEL RESPONSE · TOOL CALL <span>exec</span></p><pre><code>command: python3 -c &quot;import akshare; print(&#x27;akshare ok&#x27;)&quot; 2&gt;&amp;1;
+  python3 -c &quot;import baostock; print(&#x27;baostock ok&#x27;)&quot; 2&gt;&amp;1;
+  ls [WORKSPACE]/skills/akshare-stock/
+timeout: 30</code></pre></div><p class="response-action">Checks for available packages and inspects the skill directory.</p><p>The generated tool call probes whether <code>akshare</code> and <code>baostock</code> can be imported, then lists a local skill directory. It does not apply the environment fix described in the error.</p><p class="judge-scores">Judge scores <strong>2 · 2 · 2</strong></p></article>
+      <p class="figure-note">Recorded tool calls from Appendix E.2. Workspace paths are replaced with <code>[WORKSPACE]</code>; reasoning blocks and tool-call IDs are omitted. Scores evaluate the proposed next turn; the tool calls are not executed during evaluation.</p>
     </div></div>
   </section>
 
   <section class="resources-band" id="resources"><div class="wrap section">
     <div class="section-heading"><p class="eyebrow">04 / RESOURCES</p><h2>Explore TraceDance.</h2></div>
-    <div class="resource-grid"><div class="resource-item"><span>01 / PAPER</span><h3>Paper forthcoming</h3><p>The paper will be linked here when released.</p></div><div class="resource-item"><span>02 / CODE</span><h3><a data-code-link hidden>Explore the repository ↗</a><span data-code-pending>Under internal review</span></h3><p>Code is currently under internal review. Source deployment traces are not released.</p></div></div>
+    <div class="resource-grid">
+      <div class="resource-item"><span>01 / PAPER</span><h3>Paper forthcoming</h3><p>The paper will be linked here when released.</p></div>
+      <div class="resource-item">
+        <span>02 / GITHUB</span>
+        <a class="github-repository" href="https://github.com/ZhishanQ/TraceDance" target="_blank" rel="noopener noreferrer" aria-label="Open the TraceDance GitHub repository (opens in a new tab)" title="TraceDance on GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297C5.37.297 0 5.67 0 12.297c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.043-1.61-4.043-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.084-.729.084-.729 1.205.084 1.838 1.237 1.838 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.467-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23a11.5 11.5 0 0 1 3-.404c1.02.005 2.045.138 3 .404 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+      </div>
+    </div>
     <section class="citation-section" aria-labelledby="citation-title">
       <h3 id="citation-title">Citation</h3>
       <p class="citation-placeholder">Citation details will be added after the paper is released.</p>

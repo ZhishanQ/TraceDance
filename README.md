@@ -13,12 +13,14 @@ Open `http://localhost:8000/`.
 - `index.html`: research overview, results, case study, and citation.
 - `styles.css`: responsive page styles.
 - `site.js`: result and case selectors, and an in-page figure viewer with close and zoom controls.
-- `site-config.js`: public links. The code link remains empty until the system code is released.
+- `site-config.js`: public links. The Code button links to the GitHub repository; the arXiv link remains empty until the paper is released.
 - `assets/`: method and result figures, plus institution logos. The website uses SVG figures exported from the original paper PDFs so they stay sharp when enlarged; the project README uses the PNG copies. `assets/models/` holds the small model logos shown next to each model in the result charts.
 
 The page uses one font family and a shared type scale. Figure previews open in a dialog without navigating away. The close button, Escape key, or backdrop click closes the dialog and restores focus to the preview. The citation entry is intentionally empty until the author supplies the final BibTeX.
 
 The chart reads its values from the HTML results table. When updating the paper, also check the website's statistics, case descriptions, and citation.
+
+The case study shows the two recorded `exec` calls from Appendix E.2, including their command and timeout fields. Workspace paths use the paper's `[WORKSPACE]` placeholder; reasoning blocks and tool-call IDs are omitted. Keep these calls aligned with the verified case records when editing the explanations.
 
 ## Deployment
 
