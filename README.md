@@ -1,8 +1,13 @@
-# TraceDance
+<p align="center">
+  <img src="page/assets/tracedance-logo.png" alt="TraceDance" width="320">
+</p>
 
-**Automatically building agent behavior benchmarks from real-world deployment traces.**
+<h2 align="center">An Automated System for Building Agent Behavior Benchmarks from Real-World Agent Deployment Traces</h2>
 
-**Paper:** [arXiv:2609.33295](https://arxiv.org/abs/2609.33295)
+<p align="center">
+  <a href="https://arxiv.org/abs/2609.33295"><img src="https://img.shields.io/badge/Paper-arXiv%3A2609.33295-B31B1B" alt="Paper on arXiv"></a>
+  <a href="https://zhishanq.github.io/TraceDance/"><img src="https://img.shields.io/badge/Website-TraceDance-355CBB" alt="Project website"></a>
+</p>
 
 ## Overview
 
