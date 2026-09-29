@@ -22,11 +22,9 @@ if (websiteUrl) {
 }
 const arxivUrl = safeHttps(links.arxiv);
 if (arxivUrl) {
-  const link = document.createElement("a");
-  link.className = "button";
-  link.href = arxivUrl;
-  link.textContent = "arXiv ↗";
-  document.querySelector(".actions").append(link);
+  document.querySelectorAll("[data-arxiv-link]").forEach(link => {
+    link.href = arxivUrl;
+  });
 }
 
 // Both independent charts read the existing table; no joint frame/harness scores are inferred.
