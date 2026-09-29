@@ -4,3 +4,4 @@
 *.bbl
 *.zip
 *.tar.gz
+!page/assets/tracedance.bib

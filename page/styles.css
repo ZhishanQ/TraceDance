@@ -200,12 +200,14 @@ tbody th { font-weight: 400; }
 .resources-band { background: var(--surface); border-top: 1px solid var(--line); }
 .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 26px; }
 .resource-item { border-top: 1px solid var(--line); padding-top: 16px; }
-.resource-item > span { font-size: var(--label); letter-spacing: 1px; color: var(--muted); }
+.resource-item > span { display: block; font-size: var(--label); letter-spacing: 1px; color: var(--muted); }
 .resource-item h3 { margin: 12px 0; }
 .resource-item p { color: var(--muted); }
 .github-repository { margin-top: 12px; }
 .citation-section { margin-top: 32px; border-top: 1px solid var(--line); padding-top: 24px; }
-.citation-placeholder { margin-top: 10px; color: var(--muted); }
+.citation-download { margin-top: 10px; color: var(--blue); }
+.citation-download a { text-decoration: underline; text-underline-offset: 3px; }
+.citation { margin: 16px 0 0; padding: 20px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; font-size: var(--small); }
 footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 26px; }
 footer p, footer > a:last-child { font-size: var(--small); color: var(--muted); }
 
